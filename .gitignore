@@ -1,0 +1,24 @@
+# Saída do android/build_apk.sh (ferramentas baixadas, APK aberto e APKs gerados)
+build/
+
+# Pacotes gerados
+*.love
+*.apk
+*.aab
+
+# Chave de assinatura do Android: não versionar, mas guardar um backup seguro.
+# Sem ela não dá para instalar atualizações por cima da versão já instalada.
+*.keystore
+*.jks
+
+# Python (android/make_icon.py)
+__pycache__/
+*.pyc
+
+# Sistema e editores
+.DS_Store
+Thumbs.db
+*.swp
+*~
+.vscode/
+.idea/

@@ -1,0 +1,31 @@
+Créditos dos assets
+===================
+
+Fonte
+-----
+PressStart2P.ttf
+  "Press Start 2P" por Cody "CodeMan38" Boisclair
+  Fonte: https://github.com/google/fonts/tree/main/ofl/pressstart2p
+  Licença: SIL Open Font License 1.1 (OFL)
+
+Sons (assets/sounds/)
+---------------------
+Pacote "Interface Sounds" por Kenney (www.kenney.nl)
+  Fonte: https://kenney.nl/assets/interface-sounds
+  Licença: Creative Commons Zero (CC0)
+  correct.ogg   <- confirmation_001.ogg
+  wrong.ogg     <- error_004.ogg
+  lose_life.ogg <- bong_001.ogg
+  level_up.ogg  <- maximize_006.ogg
+  game_over.ogg <- glitch_004.ogg
+  click.ogg     <- click_002.ogg
+
+Imagens (assets/images/)
+------------------------
+background.png <- "Background Elements" por Kenney (Samples/colored_forest.png)
+  Fonte: https://kenney.nl/assets/background-elements
+  Licença: Creative Commons Zero (CC0)
+
+heart.png, heart_broken.png <- "Emotes Pack" por Kenney (Vector/Style 1)
+  Fonte: https://kenney.nl/assets/emotes-pack
+  Licença: Creative Commons Zero (CC0)
