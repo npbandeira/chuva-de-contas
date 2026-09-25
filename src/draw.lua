@@ -60,6 +60,59 @@ local function drawProblem(p)
     love.graphics.print(p.text, p.x + 14, p.y + 13)
 end
 
+local function drawWizard()
+    local x, feetY = layout.wizardFeet()
+    local castT = math.min(1, game.round.wizardCast / 0.25) -- 1 = acabou de lançar, 0 = parado
+    local hop = math.sin(castT * math.pi) * 10             -- pequeno salto ao lançar o feitiço
+
+    love.graphics.push()
+    love.graphics.translate(x, feetY - hop)
+
+    love.graphics.setColor(0, 0, 0, 0.25)
+    love.graphics.ellipse("fill", 0, 4, 16, 5)
+
+    -- robe
+    love.graphics.setColor(0.35, 0.25, 0.7)
+    love.graphics.polygon("fill", -16, 0, 16, 0, 10, -46, -10, -46)
+    love.graphics.setColor(0.9, 0.75, 0.2)
+    love.graphics.rectangle("fill", -12, -18, 24, 5)
+
+    -- cabeça e chapéu
+    love.graphics.setColor(0.95, 0.8, 0.65)
+    love.graphics.circle("fill", 0, -56, 11)
+    love.graphics.setColor(0.3, 0.2, 0.6)
+    love.graphics.polygon("fill", -13, -62, 13, -62, 0, -95)
+    love.graphics.setColor(0.9, 0.75, 0.2)
+    love.graphics.circle("fill", 0, -95, 3.5)
+
+    -- varinha: gira de "descansando" para "apontada pro alto" ao acertar
+    local angle = -0.5 - castT * 1.7
+    love.graphics.push()
+    love.graphics.translate(14, -40)
+    love.graphics.rotate(angle)
+    love.graphics.setColor(0.5, 0.35, 0.2)
+    love.graphics.setLineWidth(4)
+    love.graphics.line(0, 0, 0, -34)
+    love.graphics.setColor(1, 0.9, 0.4, 0.6 + castT * 0.4)
+    love.graphics.circle("fill", 0, -34, 5 + castT * 3)
+    love.graphics.pop()
+
+    love.graphics.pop()
+end
+
+local function drawProjectiles()
+    for _, proj in ipairs(game.round.projectiles) do
+        local progress = math.min(1, proj.t / proj.life)
+        local x = proj.x + (proj.tx - proj.x) * progress
+        local y = proj.y + (proj.ty - proj.y) * progress - math.sin(progress * math.pi) * 40
+
+        love.graphics.setColor(proj.color[1], proj.color[2], proj.color[3], 0.4)
+        love.graphics.circle("fill", x, y, 13)
+        love.graphics.setColor(1, 1, 1)
+        love.graphics.circle("fill", x, y, 6)
+    end
+end
+
 local function drawParticles()
     for _, particle in ipairs(game.round.particles) do
         local alpha = 1 - particle.t / particle.life
@@ -185,6 +238,8 @@ end
 function draw.playing(showInput)
     local round = game.round
     for _, p in ipairs(round.falling) do drawProblem(p) end
+    drawWizard()
+    drawProjectiles()
     drawParticles()
     drawEffects()
     drawHud()

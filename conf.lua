@@ -12,7 +12,7 @@ end
 MOBILE = NATIVE_MOBILE or hasArg("--mobile")
 
 -- global: versão do jogo, mostrada no menu e usada pelo android/build_apk.sh
-GAME_VERSION = "1.1"
+GAME_VERSION = "1.0.0"
 
 function love.conf(t)
     t.identity = "chuva_de_contas"

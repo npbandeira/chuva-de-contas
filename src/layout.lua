@@ -67,4 +67,10 @@ function layout.toVirtual(x, y)
     return (x - view.ox) / view.scale, (y - view.oy) / view.scale
 end
 
+-- pé do mago: um pouco à esquerda da caixa de resposta, na mesma "linha do chão"
+function layout.wizardFeet()
+    local box = layout.box
+    return box.x - 50, box.y + box.h
+end
+
 return layout

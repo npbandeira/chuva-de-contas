@@ -9,7 +9,8 @@ local game = {}
 
 game.MAX_LIVES = 3
 local HITS_PER_LEVEL = 10
-local COMBO_STEP = 5 -- a cada N acertos em sequência, comemoração extra
+local COMBO_STEP = 5     -- a cada N acertos em sequência, comemoração extra
+local PROJECTILE_TIME = 0.18 -- tempo de voo do feitiço até a conta
 
 game.state = "menu"
 game.highscore = 0
@@ -64,6 +65,8 @@ function game.start()
         falling = {},
         effects = {},
         particles = {},
+        projectiles = {},
+        wizardCast = 0, -- tempo restante da pose de lançar feitiço
         input = "",
         spawnTimer = 0,
         shake = 0,       -- tremida da caixa de resposta ao errar
@@ -158,8 +161,17 @@ function game.submitAnswer()
         local bonus = 10 * round.level + (round.combo - 1) * 2 -- combo dá pontos extras
         round.score = round.score + bonus
         round.hits = round.hits + 1
-        addEffect(p.x + p.w / 2, p.y + p.h / 2, "+" .. bonus, { 0.2, 0.75, 0.3 })
-        spawnParticles(p.x + p.w / 2, p.y + p.h / 2, theme.op[p.op])
+
+        -- o mago lança um feitiço até a conta; ela só estoura quando o feitiço chega
+        local wx, wy = layout.wizardFeet()
+        table.insert(round.projectiles, {
+            x = wx + 14, y = wy - 74,
+            tx = p.x + p.w / 2, ty = p.y + p.h / 2,
+            t = 0, life = PROJECTILE_TIME,
+            color = theme.op[p.op],
+            text = "+" .. bonus,
+        })
+        round.wizardCast = 0.25
 
         if round.combo % COMBO_STEP == 0 then
             local tier = theme.combo[math.min(#theme.combo, math.floor(round.combo / COMBO_STEP))]
@@ -197,6 +209,19 @@ local function loseLife(p)
         game.state = "gameover"
     else
         assets.play("loseLife")
+    end
+end
+
+local function updateProjectiles(dt)
+    local round = game.round
+    for i = #round.projectiles, 1, -1 do
+        local proj = round.projectiles[i]
+        proj.t = proj.t + dt
+        if proj.t >= proj.life then
+            addEffect(proj.tx, proj.ty, proj.text, { 0.2, 0.75, 0.3 })
+            spawnParticles(proj.tx, proj.ty, proj.color)
+            table.remove(round.projectiles, i)
+        end
     end
 end
 
@@ -241,12 +266,14 @@ function game.update(dt)
         if e.t >= e.life then table.remove(round.effects, i) end
     end
 
+    updateProjectiles(dt)
     updateParticles(dt)
 
     round.shake = math.max(0, round.shake - dt)
     round.screenShake = math.max(0, round.screenShake - dt)
     round.flash = math.max(0, round.flash - dt)
     round.levelBanner = math.max(0, round.levelBanner - dt)
+    round.wizardCast = math.max(0, round.wizardCast - dt)
 end
 
 return game
