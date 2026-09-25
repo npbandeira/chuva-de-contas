@@ -4,7 +4,7 @@
 set -euo pipefail
 
 APP_NAME="Chuva de Contas"
-PACKAGE="com.vekttor.chuvadecontas"
+PACKAGE="com.npbandeira.chuvadecontas"
 
 ROOT="$(cd "$(dirname "$0")/.." && pwd)"
 # versão vem do GAME_VERSION no conf.lua ("1.1" -> versionCode 101)
@@ -39,6 +39,7 @@ echo ">> copiando o jogo para assets/"
 # assets/ (main.lua na raiz). Um assets/game.love é ignorado e abre a tela "no game".
 rm -rf "$WORK/assets/main.love" "$WORK/assets/main.lua" "$WORK/assets/a" "$WORK/assets/game.love"
 cp "$ROOT/main.lua" "$ROOT/conf.lua" "$ROOT/problems.lua" "$WORK/assets/"
+cp -r "$ROOT/src" "$WORK/assets/src"
 cp -r "$ROOT/assets" "$WORK/assets/assets"
 
 echo ">> ajustando nome, pacote e orientação"
