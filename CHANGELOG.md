@@ -8,12 +8,18 @@ A versão do jogo fica em `GAME_VERSION`, no `conf.lua`.
 
 ## [Não lançado]
 
+## [1.0.1] - 2026-09-29
+
 ### Adicionado
+
+- Página no itch.io: <https://npbandeira.itch.io/chuva-de-contas>, com versão
+  para jogar no navegador.
 
 - Arquivo `LICENSE`: o projeto é de Nicolas Pantoja, com todos os direitos
   reservados. O material de terceiros continua sob as licenças dele.
 - Versão para navegador (HTML5) e pacotes para Windows, macOS e Linux,
-  gerados por `scripts/build_itch.sh` para publicar no itch.io.
+  gerados por `scripts/build_itch.sh` para publicar no itch.io. Os pacotes
+  também ficam anexados na release do GitHub.
 
 ### Corrigido
 
@@ -81,5 +87,6 @@ Primeira versão pública.
 - Textos das licenças do LÖVE e das bibliotecas de terceiros, e da fonte
   Press Start 2P (SIL OFL 1.1), em `assets/licenses/`.
 
-[Não lançado]: https://github.com/npbandeira/chuva-de-contas/compare/v1.0.0...HEAD
+[Não lançado]: https://github.com/npbandeira/chuva-de-contas/compare/v1.0.1...HEAD
+[1.0.1]: https://github.com/npbandeira/chuva-de-contas/releases/tag/v1.0.1
 [1.0.0]: https://github.com/npbandeira/chuva-de-contas/releases/tag/v1.0.0

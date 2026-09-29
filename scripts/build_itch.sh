@@ -25,7 +25,8 @@ OUT="$ROOT/build/itch"
 WORK="$OUT/work"
 
 mkdir -p "$TOOLS"
-rm -rf "$OUT"
+# apaga só os pacotes antigos: o resto de build/itch (ex.: media/) fica
+rm -rf "$WORK" "$OUT"/"$SLUG"-v*
 mkdir -p "$WORK"
 
 fetch() { # fetch <arquivo> <url>

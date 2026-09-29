@@ -7,6 +7,38 @@ toquem o chão.
 A ideia surgiu do jogo *Magic Touch: Wizard for Hire*, trocando os inimigos que
 caem por contas de matemática.
 
+## Jogar / baixar
+
+**Jogue no navegador:** <https://npbandeira.itch.io/chuva-de-contas>
+
+Ou baixe a versão para o seu sistema, sem precisar instalar o LÖVE. Os mesmos
+arquivos estão no itch.io e na
+[release do GitHub](https://github.com/npbandeira/chuva-de-contas/releases/latest):
+
+| Plataforma | Arquivo |
+|---|---|
+| Windows | [`chuva-de-contas-v1.0.1-windows.zip`](https://github.com/npbandeira/chuva-de-contas/releases/download/v1.0.1/chuva-de-contas-v1.0.1-windows.zip) |
+| macOS (Intel e Apple Silicon) | [`chuva-de-contas-v1.0.1-macos.zip`](https://github.com/npbandeira/chuva-de-contas/releases/download/v1.0.1/chuva-de-contas-v1.0.1-macos.zip) |
+| Linux (x86_64) | [`chuva-de-contas-v1.0.1-linux.AppImage`](https://github.com/npbandeira/chuva-de-contas/releases/download/v1.0.1/chuva-de-contas-v1.0.1-linux.AppImage) |
+| Android 4.1+ | [`chuva-de-contas-v1.0.1-android.apk`](https://github.com/npbandeira/chuva-de-contas/releases/download/v1.0.1/chuva-de-contas-v1.0.1-android.apk) |
+| Navegador (HTML5) | [`chuva-de-contas-v1.0.1-web.zip`](https://github.com/npbandeira/chuva-de-contas/releases/download/v1.0.1/chuva-de-contas-v1.0.1-web.zip) |
+| Qualquer um com LÖVE 11.5 | [`chuva-de-contas-v1.0.1.love`](https://github.com/npbandeira/chuva-de-contas/releases/download/v1.0.1/chuva-de-contas-v1.0.1.love) |
+
+Como abrir cada um:
+
+- **Windows:** extraia o `.zip` e abra `Chuva de Contas.exe`. Se o aviso
+  "O Windows protegeu o computador" aparecer, clique em *Mais informações* >
+  *Executar assim mesmo* (o jogo não tem assinatura digital).
+- **macOS:** extraia o `.zip` e abra `Chuva de Contas.app`. Se o macOS bloquear,
+  vá em *Ajustes do Sistema > Privacidade e Segurança* > *Abrir Mesmo Assim*.
+  Se aparecer "o app está danificado", rode
+  `xattr -cr "/Applications/Chuva de Contas.app"`.
+- **Linux:** `chmod +x chuva-de-contas-v1.0.1-linux.AppImage` e execute. Se não
+  abrir, instale o FUSE 2 (no Ubuntu: `sudo apt install libfuse2`).
+- **Android:** abra o `.apk` no celular e permita instalar apps de fontes
+  desconhecidas, se o Android pedir.
+- **`.love`:** `love chuva-de-contas-v1.0.1.love`
+
 ## Como jogar
 
 - Contas (`+`, `-`, `x`, `:`) caem em queda livre pela tela.
@@ -82,6 +114,18 @@ em `build/chuva-de-contas-v<versão>.apk`. A versão vem de `GAME_VERSION` em
 `conf.lua`. Uma keystore própria é criada automaticamente em
 `android/release.keystore` na primeira execução — guarde uma cópia de backup,
 pois sem ela não é possível instalar atualizações sobre uma versão já instalada.
+
+## Gerando os pacotes para o itch.io
+
+```bash
+./android/build_apk.sh      # primeiro o APK, para ele entrar no pacote
+./scripts/build_itch.sh
+```
+
+Gera em `build/itch/` o `.love`, a versão web (love.js), os pacotes de Windows,
+macOS e Linux (AppImage) e copia o APK. As ferramentas baixadas ficam em
+`build/tools/itch`. O script precisa de `curl`, `unzip`, `7z`, `python3` com
+Pillow e `npx` (Node.js).
 
 ## Créditos
 
