@@ -87,3 +87,10 @@ pois sem ela não é possível instalar atualizações sobre uma versão já ins
 
 Fonte, sons e imagens de terceiros estão listados com suas licenças em
 [`assets/CREDITS.txt`](assets/CREDITS.txt).
+
+## Licença
+
+Copyright (c) 2026 Nicolas Pantoja. **Todos os direitos reservados.**
+O código está aqui apenas para consulta: copiar, modificar ou publicar o jogo
+(inclusive em lojas de aplicativos) depende de autorização do autor. Fonte, sons,
+imagens e o motor LÖVE seguem as licenças de terceiros. Veja [`LICENSE`](LICENSE).

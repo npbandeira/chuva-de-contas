@@ -8,6 +8,11 @@ A versão do jogo fica em `GAME_VERSION`, no `conf.lua`.
 
 ## [Não lançado]
 
+### Adicionado
+
+- Arquivo `LICENSE`: o projeto é de Nicolas Pantoja, com todos os direitos
+  reservados. O material de terceiros continua sob as licenças dele.
+
 ## [1.0.0] - 2026-09-29
 
 Primeira versão pública.

@@ -1,0 +1,42 @@
+Chuva de Contas
+Copyright (c) 2026 Nicolas Pantoja. Todos os direitos reservados.
+
+Este projeto, incluindo o código-fonte, o design do jogo, os gráficos e
+animações desenhados por código, o ícone, a trilha sonora gerada por código,
+os textos e o nome "Chuva de Contas", é de propriedade exclusiva de
+Nicolas Pantoja.
+
+O código está publicado no GitHub apenas para consulta. Sem autorização
+prévia e por escrito do autor, NÃO é permitido:
+
+  - copiar, modificar ou criar obras derivadas deste projeto, no todo ou
+    em parte;
+  - distribuir, publicar ou revender o jogo ou versões modificadas dele,
+    inclusive em lojas de aplicativos (Google Play, App Store etc.) ou
+    em sites de jogos;
+  - usar o nome, o ícone ou a identidade visual do jogo.
+
+Os Termos de Serviço do GitHub permitem ver o repositório e criar um fork
+dentro do próprio GitHub. Isso não concede nenhum outro direito sobre o
+projeto.
+
+Para pedir autorização, entre em contato com o autor pelo GitHub:
+https://github.com/npbandeira
+
+MATERIAL DE TERCEIROS
+
+Os itens abaixo não pertencem ao autor e continuam sob suas próprias
+licenças, que prevalecem sobre este aviso no que se refere a eles:
+
+  - Fonte "Press Start 2P" (assets/PressStart2P.ttf), de Cody "CodeMan38"
+    Boisclair: SIL Open Font License 1.1 (assets/licenses/OFL-PressStart2P.txt).
+  - Sons e imagens da Kenney (assets/sounds/, assets/images/): Creative
+    Commons Zero (CC0).
+  - Motor LÖVE e bibliotecas incluídas nos pacotes para Android: licença
+    zlib e demais licenças listadas em assets/licenses/LOVE-license.txt.
+
+Detalhes e créditos completos em assets/CREDITS.txt.
+
+ESTE SOFTWARE É FORNECIDO "COMO ESTÁ", SEM GARANTIAS DE QUALQUER TIPO. EM
+NENHUMA HIPÓTESE O AUTOR SERÁ RESPONSÁVEL POR DANOS DECORRENTES DO USO DO
+SOFTWARE.
