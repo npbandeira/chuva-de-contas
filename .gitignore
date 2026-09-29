@@ -10,6 +10,7 @@ build/
 # Sem ela não dá para instalar atualizações por cima da versão já instalada.
 *.keystore
 *.jks
+android/keystore.properties
 
 # Python (android/make_icon.py)
 __pycache__/

@@ -5,6 +5,8 @@ local game = require("src.game")
 local input = require("src.input")
 local draw = require("src.draw")
 local music = require("src.music")
+local menu = require("src.menu")
+local transition = require("src.transition")
 
 function love.load()
     math.randomseed(os.time())
@@ -21,7 +23,14 @@ end
 
 function love.update(dt)
     input.update(dt)
+    transition.update(dt)
     game.update(dt)
+    menu.update(dt)
+end
+
+-- trocou de janela / app foi para segundo plano: pausa sozinho
+function love.focus(focused)
+    if not focused then game.pause() end
 end
 
 function love.textinput(t)
@@ -30,6 +39,10 @@ end
 
 function love.keypressed(key)
     input.keypressed(key)
+end
+
+function love.wheelmoved(_, dy)
+    input.wheelmoved(dy)
 end
 
 function love.touchpressed(_, x, y)

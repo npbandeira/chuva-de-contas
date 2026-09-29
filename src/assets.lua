@@ -39,6 +39,38 @@ local function arpeggio(freqs, noteDur)
     return love.audio.newSource(data, "static")
 end
 
+-- estalo metálico curto, usado quando um inimigo blindado/chefe leva um golpe
+-- e ainda não é destruído
+local function metalHit()
+    local rate = 44100
+    local dur = 0.12
+    local data = love.sound.newSoundData(math.floor(rate * dur), rate, 16, 1)
+    for i = 0, data:getSampleCount() - 1 do
+        local t = i / rate
+        local env = math.exp(-t * 30)
+        local tone = math.sin(2 * math.pi * 900 * t) * 0.4
+        local noise = (math.random() * 2 - 1) * 0.3
+        data:setSample(i, (tone + noise) * env)
+    end
+    return love.audio.newSource(data, "static")
+end
+
+-- explosão curta usada quando um poder estoura todas as contas na tela
+local function boom()
+    local rate = 44100
+    local dur = 0.35
+    local data = love.sound.newSoundData(math.floor(rate * dur), rate, 16, 1)
+    for i = 0, data:getSampleCount() - 1 do
+        local t = i / rate
+        local env = math.exp(-t * 6)
+        local freq = math.max(30, 90 - t * 40)
+        local tone = math.sin(2 * math.pi * freq * t) * 0.5
+        local noise = (math.random() * 2 - 1) * 0.35 * math.exp(-t * 10)
+        data:setSample(i, math.max(-1, math.min(1, (tone + noise) * env)))
+    end
+    return love.audio.newSource(data, "static")
+end
+
 local function loadFont(size)
     local ok, font = pcall(love.graphics.newFont, "assets/PressStart2P.ttf", size)
     font = ok and font or love.graphics.newFont(size)
@@ -52,6 +84,7 @@ function assets.load()
     assets.heartBroken = loadImage("assets/images/heart_broken.png")
 
     assets.fonts = {
+        counter = loadFont(120),
         title = loadFont(36),
         big = loadFont(24),
         problem = loadFont(20),
@@ -67,6 +100,8 @@ function assets.load()
         gameOver = loadSound("assets/sounds/game_over.ogg", 100),
         click = loadSound("assets/sounds/click.ogg", 600),
         combo = arpeggio({ 523.25, 659.25, 783.99, 1046.50 }, 0.07), -- C5 E5 G5 C6
+        hit = metalHit(),
+        boom = boom(),
     }
 end
 

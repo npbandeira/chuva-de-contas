@@ -102,6 +102,11 @@ function music.stop()
     if music.source then music.source:stop() end
 end
 
+-- abaixa a música enquanto o jogo está pausado
+function music.duck(on)
+    music.setVolume(on and 0.08 or 0.3)
+end
+
 function music.setVolume(v)
     if music.source then music.source:setVolume(v) end
 end

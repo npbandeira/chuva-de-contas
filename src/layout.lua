@@ -9,6 +9,7 @@ layout.GROUND_Y = 520 -- onde as contas "batem no chão"
 layout.view = { scale = 1, ox = 0, oy = 0 }
 layout.box = {}  -- caixa de resposta
 layout.keys = {} -- teclado numérico na tela (só no celular)
+layout.pauseIcon = { x = 12, y = 6, w = 32, h = 32 } -- botão de pausa no HUD
 
 function layout.update()
     local view, box, keys = layout.view, layout.box, layout.keys
@@ -60,6 +61,28 @@ function layout.update()
     end
 
     layout.W, layout.H, layout.GROUND_Y = W, H, GROUND_Y
+end
+
+-- botão secundário no rodapé: "CREDITOS" na home e "VOLTAR" nos créditos
+function layout.footerButton()
+    local w, h = 190, 36
+    return { x = (layout.W - w) / 2, y = layout.H - 62, w = w, h = h }
+end
+
+-- botões da tela de pausa, de cima para baixo
+function layout.pauseButtons()
+    local W, H = layout.W, layout.H
+    local w, h, gap = 260, 56, 16
+    local top = H * 0.44
+    local labels = {
+        { id = "resume", label = "CONTINUAR", key = "ENTER" },
+        { id = "restart", label = "REINICIAR", key = "R" },
+        { id = "menu", label = "MENU", key = "M" },
+    }
+    for i, b in ipairs(labels) do
+        b.x, b.y, b.w, b.h = (W - w) / 2, top + (i - 1) * (h + gap), w, h
+    end
+    return labels
 end
 
 function layout.toVirtual(x, y)

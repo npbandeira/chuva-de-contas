@@ -29,3 +29,26 @@ background.png <- "Background Elements" por Kenney (Samples/colored_forest.png)
 heart.png, heart_broken.png <- "Emotes Pack" por Kenney (Vector/Style 1)
   Fonte: https://kenney.nl/assets/emotes-pack
   Licença: Creative Commons Zero (CC0)
+
+Música
+------
+Trilha chiptune gerada por código em src/music.lua (original, sem melodias de
+terceiros).
+
+Motor e bibliotecas
+-------------------
+LÖVE 11.5 (https://love2d.org) - licença zlib.
+O LÖVE e o APK/AAB para Android incluem bibliotecas de terceiros (LuaJIT, SDL2,
+FreeType, OpenAL Soft, libmpg123, entre outras). Texto completo das licenças,
+com os links para o código-fonte das bibliotecas LGPL (OpenAL Soft e
+libmpg123), em licenses/LOVE-license.txt.
+
+Portions of this software are copyright © The FreeType Project
+(www.freetype.org). All rights reserved.
+
+Licença da fonte Press Start 2P: licenses/OFL-PressStart2P.txt
+
+Inspiração
+----------
+A ideia do jogo foi inspirada em "Magic Touch: Wizard for Hire" (Nitrome).
+Chuva de Contas é um jogo independente, sem afiliação com a Nitrome.

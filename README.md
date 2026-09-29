@@ -18,14 +18,24 @@ caem por contas de matemática.
 - Acertos em sequência formam um **combo**: cada acerto vale mais pontos que o
   anterior, e a cada 5 acertos seguidos rola uma comemoração (efeito na tela,
   tremida e som) que fica mais intensa conforme o combo cresce.
+- De vez em quando aparecem contas especiais:
+  - **Blindada** (contorno prateado): precisa resolver duas vezes — ao acertar a
+    primeira, ela racha e vira outra conta na mesma posição.
+  - **Poder** (brilho dourado com uma estrela): ao resolver, estoura em cadeia
+    todas as outras contas na tela, dando pontos bônus por cada uma.
+  - **Chefe** (vermelho escuro, maior e mais lento): aparece a cada nível múltiplo
+    de 3, com um aviso na tela, e precisa de três acertos pra cair — vale o
+    triplo de pontos.
 - O recorde de pontos é salvo entre execuções (`highscore.txt`).
 - Trilha sonora *chiptune* gerada por código, tocando em loop durante a partida:
   baixo saltitante e arpejo rápido inspirados no clima de temas de fase clássicos
   (Super Mario World / Sonic), com uma batida simples e um sininho mágico no
   início de cada volta do loop como aceno ao *Magic Touch*.
 
-**PC:** digite os números no teclado e pressione Enter. Esc volta ao menu / sai.
-**Celular:** use o teclado numérico na tela.
+**PC:** digite os números no teclado e pressione Enter. Esc ou P pausa a partida;
+na tela inicial, C abre os créditos e Esc sai.
+**Celular:** use o teclado numérico na tela; o botão `||` no canto pausa e o botão
+Voltar do Android funciona como o Esc.
 
 ## Executando
 
@@ -55,6 +65,7 @@ src/
   game.lua       Estado e regras da partida: pontos, nível, vidas, combo, partículas
   input.lua      Teclado físico, teclado na tela e toques/cliques
   draw.lua       Desenho de tudo: fundo, contas, HUD, telas e efeitos visuais
+  transition.lua Animação de transição entre telas (menu, partida, fim de jogo)
 assets/          Fontes, sons e imagens de terceiros (créditos em assets/CREDITS.txt)
 android/         Script e recursos para gerar o APK Android
 ```
