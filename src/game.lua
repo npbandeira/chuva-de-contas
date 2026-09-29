@@ -45,6 +45,12 @@ local function spawnParticles(x, y, color, count)
 end
 
 function game.loadHighscore()
+    -- confere antes de ler: na versão web (love.js) ler um arquivo que ainda
+    -- não existe trava o jogo, e na 1ª vez que alguém joga ele nunca existe
+    if not love.filesystem.getInfo("highscore.txt") then
+        game.highscore = 0
+        return
+    end
     local content = love.filesystem.read("highscore.txt")
     game.highscore = tonumber(content) or 0
 end

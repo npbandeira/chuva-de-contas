@@ -12,6 +12,14 @@ A versão do jogo fica em `GAME_VERSION`, no `conf.lua`.
 
 - Arquivo `LICENSE`: o projeto é de Nicolas Pantoja, com todos os direitos
   reservados. O material de terceiros continua sob as licenças dele.
+- Versão para navegador (HTML5) e pacotes para Windows, macOS e Linux,
+  gerados por `scripts/build_itch.sh` para publicar no itch.io.
+
+### Corrigido
+
+- Versão web travava ao abrir pela primeira vez, na leitura do recorde.
+- Na versão web, a dica "ESC para sair" não aparece mais e o ESC não
+  encerra o jogo.
 
 ## [1.0.0] - 2026-09-29
 

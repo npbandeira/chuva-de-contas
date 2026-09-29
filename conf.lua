@@ -11,6 +11,9 @@ end
 -- global: lido também pelo main.lua
 MOBILE = NATIVE_MOBILE or hasArg("--mobile")
 
+-- global: versão para navegador (love.js); lá não existe "sair do jogo"
+WEB = love._os == "Web"
+
 -- global: versão do jogo, mostrada no menu e usada pelo android/build_apk.sh
 GAME_VERSION = "1.0.0"
 

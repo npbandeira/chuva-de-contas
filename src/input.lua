@@ -106,7 +106,7 @@ function input.keypressed(key)
             game.pause()
         elseif game.state == "paused" then
             game.resume()
-        elseif key == "escape" then
+        elseif key == "escape" and not WEB then
             love.event.quit()
         end
         return

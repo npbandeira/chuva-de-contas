@@ -700,7 +700,7 @@ local function drawMenu()
     love.graphics.setFont(assets.fonts.small)
     love.graphics.setColor(1, 1, 1, 0.5)
     love.graphics.printf("v" .. (GAME_VERSION or "?"), 0, H - 20, W - 12, "right")
-    if not MOBILE then
+    if not MOBILE and not WEB then
         love.graphics.printf("ESC para sair", 12, H - 20, W, "left")
     end
 end
@@ -933,7 +933,7 @@ local function drawGameOver()
     if round.overDelay <= 0 and love.timer.getTime() % 1 < 0.7 then
         printCentered(restartHint, assets.fonts.hud, H * 0.717)
     end
-    if not MOBILE then
+    if not MOBILE and not WEB then
         printCentered("ESC para sair", assets.fonts.small, H * 0.933)
     end
 end

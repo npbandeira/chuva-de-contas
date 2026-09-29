@@ -1,0 +1,105 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+  <title>Chuva de Contas</title>
+  <style>
+    html, body {
+      margin: 0;
+      height: 100%;
+      background: #1a1e29;
+      overflow: hidden;
+    }
+    body {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    /* o jogo roda em 800x600 e o CSS só escala mantendo a proporção */
+    #canvas {
+      display: block;
+      width: min(100vw, calc(100vh * 4 / 3));
+      height: auto;
+      aspect-ratio: 4 / 3;
+      outline: none;
+    }
+    #loading {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 16px;
+      color: #d6edf5;
+      font: bold 20px system-ui, sans-serif;
+    }
+    #bar {
+      width: 240px;
+      height: 10px;
+      border-radius: 5px;
+      background: #2c3345;
+      overflow: hidden;
+    }
+    #fill {
+      width: 0;
+      height: 100%;
+      background: #4ccc66;
+      transition: width 0.2s;
+    }
+  </style>
+</head>
+<body>
+  <div id="loading">
+    <div id="status">Carregando...</div>
+    <div id="bar"><div id="fill"></div></div>
+  </div>
+  <canvas id="canvas" tabindex="0" oncontextmenu="event.preventDefault()" width="800" height="600"></canvas>
+
+  <script>
+    var canvas = document.getElementById("canvas");
+
+    // dentro do iframe do itch.io o teclado só chega com o foco no jogo
+    window.addEventListener("load", function () { canvas.focus(); });
+    window.addEventListener("pointerdown", function () { canvas.focus(); });
+    // espaço e setas não rolam a página
+    window.addEventListener("keydown", function (e) {
+      if ([32, 37, 38, 39, 40].indexOf(e.keyCode) > -1) e.preventDefault();
+    });
+
+    var Module = {
+      arguments: ["./game.love"],
+      INITIAL_MEMORY: 67108864,
+      printErr: console.error.bind(console),
+      canvas: canvas,
+      totalDependencies: 0,
+      remainingDependencies: 0,
+      setStatus: function (text) {
+        if (text) document.getElementById("status").textContent = text;
+      },
+      monitorRunDependencies: function (left) {
+        this.remainingDependencies = left;
+        this.totalDependencies = Math.max(this.totalDependencies, left);
+        var done = this.totalDependencies - left;
+        var pct = this.totalDependencies ? (done / this.totalDependencies) * 100 : 0;
+        document.getElementById("fill").style.width = pct + "%";
+        if (left === 0) document.getElementById("loading").style.display = "none";
+      }
+    };
+    canvas.addEventListener("webglcontextlost", function (e) {
+      e.preventDefault();
+      document.getElementById("status").textContent = "O navegador perdeu o acesso à placa de vídeo. Recarregue a página.";
+      document.getElementById("loading").style.display = "flex";
+    });
+    window.onerror = function () {
+      Module.setStatus("Algo deu errado. Recarregue a página.");
+      document.getElementById("loading").style.display = "flex";
+    };
+
+    function applicationLoad() { Love(Module); }
+  </script>
+  <script src="game.js"></script>
+  <script async src="love.js" onload="applicationLoad()"></script>
+</body>
+</html>
