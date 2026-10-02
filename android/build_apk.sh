@@ -7,8 +7,8 @@ APP_NAME="Chuva de Contas"
 PACKAGE="com.npbandeira.chuvadecontas"
 
 ROOT="$(cd "$(dirname "$0")/.." && pwd)"
-# versão vem do GAME_VERSION no conf.lua ("1.1" -> versionCode 101)
-VERSION_NAME="$(sed -n 's/^GAME_VERSION = "\(.*\)"/\1/p' "$ROOT/conf.lua")"
+# versão vem do config.VERSION em src/config.lua ("1.1" -> versionCode 101)
+VERSION_NAME="$(sed -n 's/^config.VERSION = "\(.*\)"/\1/p' "$ROOT/src/config.lua")"
 VERSION_CODE="$(echo "$VERSION_NAME" | awk -F. '{ print $1 * 100 + $2 }')"
 OUTPUT="chuva-de-contas-v$VERSION_NAME.apk"
 BUILD="$ROOT/build"
@@ -38,8 +38,9 @@ echo ">> copiando o jogo para assets/"
 # O LÖVE 11.5 no Android só carrega o jogo embutido com os arquivos soltos em
 # assets/ (main.lua na raiz). Um assets/game.love é ignorado e abre a tela "no game".
 rm -rf "$WORK/assets/main.love" "$WORK/assets/main.lua" "$WORK/assets/a" "$WORK/assets/game.love"
-cp "$ROOT/main.lua" "$ROOT/conf.lua" "$ROOT/problems.lua" "$WORK/assets/"
+cp "$ROOT/main.lua" "$ROOT/conf.lua" "$WORK/assets/"
 cp -r "$ROOT/src" "$WORK/assets/src"
+cp -r "$ROOT/states" "$WORK/assets/states"
 cp -r "$ROOT/assets" "$WORK/assets/assets"
 
 echo ">> ajustando nome, pacote e orientação"

@@ -1,37 +1,27 @@
--- Modo celular: automático no Android/iOS, ou forçado no PC com "love . --mobile"
-local NATIVE_MOBILE = love._os == "Android" or love._os == "iOS"
-
-local function hasArg(name)
-    for _, a in pairs(arg or {}) do
-        if a == name then return true end
-    end
-    return false
-end
-
--- global: lido também pelo main.lua
-MOBILE = NATIVE_MOBILE or hasArg("--mobile")
-
--- global: versão para navegador (love.js); lá não existe "sair do jogo"
-WEB = love._os == "Web"
-
--- global: versão do jogo, mostrada no menu e usada pelo android/build_apk.sh
-GAME_VERSION = "1.0.1"
+-- Configuração do LÖVE: roda antes do main.lua e define janela e módulos.
+local config = require("src.config")
 
 function love.conf(t)
-    t.identity = "chuva_de_contas"
+    t.identity = "chuva_de_contas" -- pasta do save (recorde)
+    t.version = "11.5"
     t.window.title = "Chuva de Contas"
     t.window.vsync = 1
 
-    if MOBILE then
+    if config.mobile then
         -- retrato; no celular a janela não redimensionável trava a orientação
         t.window.width = 405
         t.window.height = 720
         t.window.highdpi = true
-        t.window.fullscreen = NATIVE_MOBILE
-        t.window.resizable = not NATIVE_MOBILE
+        t.window.fullscreen = config.nativeMobile
+        t.window.resizable = not config.nativeMobile
     else
         t.window.width = 800
         t.window.height = 600
         t.window.resizable = true
     end
+
+    -- módulos que o jogo não usa: desligados para abrir mais rápido
+    t.modules.joystick = false
+    t.modules.physics = false
+    t.modules.video = false
 end

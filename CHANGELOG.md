@@ -4,9 +4,20 @@ Todas as mudanças relevantes do **Chuva de Contas** ficam registradas aqui.
 
 O formato segue o [Keep a Changelog](https://keepachangelog.com/pt-BR/1.1.0/)
 e o projeto usa [Versionamento Semântico](https://semver.org/lang/pt-BR/).
-A versão do jogo fica em `GAME_VERSION`, no `conf.lua`.
+A versão do jogo fica em `config.VERSION`, no `src/config.lua`.
 
 ## [Não lançado]
+
+### Alterado
+
+- Código reorganizado em telas (`states/`) com um gerenciador de estados, no
+  lugar de um `game.state` checado em todo lugar. O desenho, que ficava todo
+  no `src/draw.lua`, foi dividido entre as telas, o HUD e as entidades
+  (`src/entities/`). O jogo continua igual.
+- Versão e plataforma agora ficam em `src/config.lua`, sem variáveis globais.
+- `problems.lua` foi para `src/` e a fonte foi para `assets/fonts/`.
+- `conf.lua` fixa o LÖVE 11.5 e desliga os módulos que o jogo não usa
+  (joystick, física e vídeo).
 
 ## [1.0.1] - 2026-09-29
 

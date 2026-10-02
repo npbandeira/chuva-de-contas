@@ -72,7 +72,7 @@ local function boom()
 end
 
 local function loadFont(size)
-    local ok, font = pcall(love.graphics.newFont, "assets/PressStart2P.ttf", size)
+    local ok, font = pcall(love.graphics.newFont, "assets/fonts/PressStart2P.ttf", size)
     font = ok and font or love.graphics.newFont(size)
     font:setFilter("linear", "nearest") -- fonte pixelada continua nítida ao ampliar
     return font

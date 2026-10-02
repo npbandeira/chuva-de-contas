@@ -4,6 +4,12 @@ local theme = {}
 
 theme.sky = { 0.84, 0.93, 0.96 }
 theme.ground = { 0.65, 0.6, 0.57 }
+theme.letterbox = { 0.1, 0.12, 0.16 } -- faixas fora da área do jogo
+
+-- aço das contas blindadas e dourado do chefe
+theme.steel = { 0.74, 0.79, 0.86 }
+theme.steelDark = { 0.3, 0.35, 0.45 }
+theme.bossGold = { 1, 0.8, 0.25 }
 
 theme.op = {
     ["+"] = { 0.25, 0.55, 0.95 },

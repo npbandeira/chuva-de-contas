@@ -86,20 +86,37 @@ love . --mobile
 ## Estrutura do projeto
 
 ```
-conf.lua         Configuração da janela do LÖVE e detecção de modo mobile
-main.lua         Ponto de entrada: só liga os callbacks do LÖVE aos módulos abaixo
-problems.lua     Gerador das contas (separado para poder testar com Lua puro)
+main.lua            Ponto de entrada: carrega tudo e repassa os callbacks do LÖVE à tela atual
+conf.lua            Janela e módulos do LÖVE (lê plataforma e versão de src/config.lua)
+states/             Telas do jogo; cada uma tem enter/exit/update/draw/entrada
+  menu.lua          Tela inicial com título animado, JOGAR e recorde
+  credits.lua       Créditos rolando
+  play.lua          Partida em andamento e contagem "3, 2, 1" ao voltar da pausa
+  pause.lua         Pausa: continuar, reiniciar ou ir ao menu
+  gameover.lua      Fim de jogo e "jogar de novo"
 src/
-  assets.lua     Carrega imagens, fontes e sons (com fallback sintetizado)
-  music.lua      Trilha chiptune gerada por código, em loop
-  theme.lua      Paleta de cores do tema arcade/neon
-  layout.lua     Resolução virtual, escala pra tela real e teclado numérico
-  game.lua       Estado e regras da partida: pontos, nível, vidas, combo, partículas
-  input.lua      Teclado físico, teclado na tela e toques/cliques
-  draw.lua       Desenho de tudo: fundo, contas, HUD, telas e efeitos visuais
-  transition.lua Animação de transição entre telas (menu, partida, fim de jogo)
-assets/          Fontes, sons e imagens de terceiros (créditos em assets/CREDITS.txt)
-android/         Script e recursos para gerar o APK Android
+  config.lua        Versão do jogo e plataforma (celular, navegador)
+  statemanager.lua  Troca de telas e repasse dos callbacks
+  round.lua         Regras da partida: pontos, nível, vidas, combo, contas em queda
+  hud.lua           Interface da partida: vidas, caixa de resposta, teclado na tela
+  demo.lua          Cena animada atrás do menu e dos créditos
+  problems.lua      Gerador das contas (Lua puro, sem depender do LÖVE)
+  entities/
+    card.lua        A conta caindo (normal, blindada, poder, chefe)
+    wizard.lua      O mago
+    spell.lua       Feitiço que voa da varinha até a conta
+  particles.lua     Estilhaços ao estourar uma conta
+  ui.lua            Peças de desenho comuns: texto, fundo, botões, scanlines
+  layout.lua        Resolução virtual, escala para a tela real e teclado numérico
+  transition.lua    Transição de losangos entre telas
+  assets.lua        Carrega imagens, fontes e sons (com fallback sintetizado)
+  music.lua         Trilha chiptune gerada por código, em loop
+  theme.lua         Paleta de cores do tema arcade/neon
+  save.lua          Recorde salvo em disco
+assets/             Fontes, imagens e sons de terceiros (créditos em assets/CREDITS.txt)
+  fonts/  images/  sounds/  licenses/
+android/            Script e recursos para gerar o APK Android
+scripts/            Build para o itch.io (web, Windows, macOS, Linux)
 ```
 
 ## Gerando o APK Android
@@ -110,8 +127,8 @@ android/         Script e recursos para gerar o APK Android
 
 O script baixa as ferramentas necessárias (LÖVE embed, apktool, uber-apk-signer),
 empacota o jogo dentro do APK oficial do LÖVE para Android e assina o resultado
-em `build/chuva-de-contas-v<versão>.apk`. A versão vem de `GAME_VERSION` em
-`conf.lua`. Uma keystore própria é criada automaticamente em
+em `build/chuva-de-contas-v<versão>.apk`. A versão vem de `config.VERSION` em
+`src/config.lua`. Uma keystore própria é criada automaticamente em
 `android/release.keystore` na primeira execução — guarde uma cópia de backup,
 pois sem ela não é possível instalar atualizações sobre uma versão já instalada.
 

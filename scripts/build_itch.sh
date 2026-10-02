@@ -18,7 +18,7 @@ LOVE_VERSION="11.5"
 LOVEJS_VERSION="11.4.1"
 
 ROOT="$(cd "$(dirname "$0")/.." && pwd)"
-VERSION="$(sed -n 's/^GAME_VERSION = "\(.*\)"/\1/p' "$ROOT/conf.lua")"
+VERSION="$(sed -n 's/^config.VERSION = "\(.*\)"/\1/p' "$ROOT/src/config.lua")"
 NAME="$SLUG-v$VERSION"
 TOOLS="$ROOT/build/tools/itch"
 OUT="$ROOT/build/itch"
@@ -48,8 +48,8 @@ LOVEFILE="$OUT/$NAME.love"
 python3 - "$ROOT" "$LOVEFILE" <<'EOF'
 import os, sys, zipfile
 root, out = sys.argv[1], sys.argv[2]
-files = ["main.lua", "conf.lua", "problems.lua", "LICENSE"]
-for d in ("src", "assets"):
+files = ["main.lua", "conf.lua", "LICENSE"]
+for d in ("src", "states", "assets"):
     for base, _, names in os.walk(os.path.join(root, d)):
         files += [os.path.relpath(os.path.join(base, n), root) for n in names]
 with zipfile.ZipFile(out, "w", zipfile.ZIP_DEFLATED) as z:

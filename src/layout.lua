@@ -1,6 +1,8 @@
 -- Resolução virtual e escala para a tela real, além do layout do teclado
 -- numérico. PC: 800x600 fixo. Celular: largura 540 e altura segue a
 -- proporção da tela.
+local config = require("src.config")
+
 local layout = {}
 
 layout.HUD_H = 44
@@ -21,7 +23,7 @@ function layout.update()
     end
 
     local W, H
-    if MOBILE then
+    if config.mobile then
         W = 540
         H = math.max(860, math.floor(W * sh / sw))
     else
@@ -35,7 +37,7 @@ function layout.update()
     for i = #keys, 1, -1 do keys[i] = nil end
 
     local GROUND_Y
-    if MOBILE then
+    if config.mobile then
         local margin, gap, keyH = 16, 10, 70
         local keyW = (W - margin * 2 - gap * 2) / 3
         local top = H - margin - (keyH * 4 + gap * 3)
