@@ -42,7 +42,7 @@ Como abrir cada um:
 ## Como jogar
 
 - Contas (`+`, `-`, `x`, `:`) caem em queda livre pela tela.
-- Digite a resposta e confirme para destruir a conta correspondente antes que ela
+- Digite a resposta para destruir a conta correspondente antes que ela
   chegue ao chão.
 - Cada conta perdida custa uma vida; o jogo acaba com 3 vidas perdidas.
 - A cada 10 acertos o nível sobe: as contas ficam maiores e caem mais rápido, e
@@ -64,8 +64,9 @@ Como abrir cada um:
   (Super Mario World / Sonic), com uma batida simples e um sininho mágico no
   início de cada volta do loop como aceno ao *Magic Touch*.
 
-**PC:** digite os números no teclado e pressione Enter. Esc ou P pausa a partida;
-na tela inicial, C abre os créditos e Esc sai.
+**PC:** digite os números no teclado; a conta estoura assim que a resposta
+bate, sem precisar de Enter (ele continua funcionando para confirmar na hora).
+Esc ou P pausa a partida; na tela inicial, C abre os créditos e Esc sai.
 **Celular:** use o teclado numérico na tela; o botão `||` no canto pausa e o botão
 Voltar do Android funciona como o Esc.
 

@@ -8,6 +8,19 @@ A versão do jogo fica em `config.VERSION`, no `src/config.lua`.
 
 ## [Não lançado]
 
+### Jogo
+
+- A resposta vai sozinha: a conta estoura assim que o número digitado bate,
+  sem precisar de ENTER/OK. Se a resposta ainda puder crescer (ex.: "1" com
+  um 12 na tela), o jogo espera um instante por mais um dígito. Dígitos que
+  não levam a nenhuma conta na tela contam como erro na hora. ENTER/OK
+  continuam funcionando para confirmar na hora.
+- Uma barrinha na caixa de resposta mostra a espera pelo dígito a mais.
+- A caixa de resposta pisca verde ao acertar (e continua vermelha ao errar).
+- Celular: o teclado na tela agora tem só os dígitos, no estilo de celular
+  (0 no meio da última fileira), sem OK e sem apagar.
+- PC: a dica ao lado da caixa some depois do primeiro acerto.
+
 ### Alterado
 
 - Código reorganizado em telas (`states/`) com um gerenciador de estados, no

@@ -18,6 +18,9 @@ local HITS_PER_LEVEL = 10
 local COMBO_STEP = 5         -- a cada N acertos em sequência, comemoração extra
 local SPELL_TIME = 0.18      -- tempo de voo do feitiço até a conta
 local MAX_DIGITS = 4
+-- quando o que foi digitado já acerta uma conta mas ainda pode virar outra
+-- resposta (ex.: "1" com um 12 na tela), espera um instante por mais um dígito
+local AUTO_SUBMIT_DELAY = 0.45
 
 local GREEN = { 0.2, 0.75, 0.3 }
 local GOLD = { 1, 0.85, 0.2 }
@@ -41,6 +44,9 @@ function Round.new()
         tip = nil,           -- dica curta na 1ª vez que aparece uma blindada
         seenArmored = false,
         input = "",
+        submitTimer = 0, -- > 0: resposta certa digitada, esperando um possível dígito a mais
+        submitDelay = AUTO_SUBMIT_DELAY,
+        okFlash = 0,     -- caixa de resposta fica verde ao acertar
         spawnTimer = 0,
         shake = 0,       -- tremida da caixa de resposta ao errar
         screenShake = 0, -- tremida da tela toda ao subir de nível / combo
@@ -124,15 +130,50 @@ function Round:spawnCard()
     return true
 end
 
+-- compara o que foi digitado com as contas na tela: `exact` se alguma tem
+-- essa resposta, `longer` se alguma resposta maior começa com esses dígitos
+function Round:matchInput()
+    local exact, longer = false, false
+    for _, card in ipairs(self.falling) do
+        local answer = tostring(card.answer)
+        if answer == self.input then
+            exact = true
+        elseif answer:sub(1, #self.input) == self.input then
+            longer = true
+        end
+    end
+    return exact, longer
+end
+
+-- a resposta vai sozinha, sem precisar de ENTER/OK: na hora quando não há
+-- dúvida, depois de um instante quando ainda pode crescer, e conta como erro
+-- quando nenhuma conta na tela começa com esses dígitos
+function Round:checkInput()
+    self.submitTimer = 0
+    if self.input == "" then return end
+    local exact, longer = self:matchInput()
+    if exact and longer then
+        self.submitTimer = AUTO_SUBMIT_DELAY
+    elseif exact or not longer then
+        self:submitAnswer()
+    end
+end
+
 function Round:typeDigit(d)
     if #self.input < MAX_DIGITS then
         self.input = self.input .. d
         assets.play("click")
+        self:checkInput()
     end
 end
 
+-- apagar nunca conta como erro; se sobrar uma resposta certa, ela vai depois do instante de espera
 function Round:backspace()
     self.input = self.input:sub(1, -2)
+    self.submitTimer = 0
+    if self.input ~= "" and self:matchInput() then
+        self.submitTimer = AUTO_SUBMIT_DELAY
+    end
 end
 
 -- poder coletado: estoura todas as outras contas na tela em cadeia
@@ -181,6 +222,7 @@ function Round:submitAnswer()
     if self.input == "" then return end
     local value = tonumber(self.input)
     self.input = ""
+    self.submitTimer = 0
 
     -- procura a conta mais baixa (mais perigosa) com essa resposta
     local best
@@ -208,6 +250,7 @@ function Round:submitAnswer()
     self.score = self.score + bonus
     self.hits = self.hits + 1
     self.hitPulse = 1
+    self.okFlash = 0.25
     card.hp = card.hp - 1
     local destroyed = card.hp <= 0
 
@@ -263,6 +306,14 @@ function Round:update(dt)
         end
     end
 
+    if self.submitTimer > 0 then
+        self.submitTimer = self.submitTimer - dt
+        -- se a conta caiu enquanto esperava, a resposta fica na caixa
+        if self.submitTimer <= 0 and self:matchInput() then
+            self:submitAnswer()
+        end
+    end
+
     for i = #self.effects, 1, -1 do
         local e = self.effects[i]
         e.t = e.t + dt
@@ -282,6 +333,7 @@ function Round:update(dt)
     particles.update(self.particles, dt)
 
     self.shake = math.max(0, self.shake - dt)
+    self.okFlash = math.max(0, self.okFlash - dt)
     self.screenShake = math.max(0, self.screenShake - dt)
     self.flash = math.max(0, self.flash - dt)
     self.hitPulse = math.max(0, self.hitPulse - dt * 4)

@@ -62,19 +62,34 @@ local function drawInputBox(round)
 
     love.graphics.setColor(0, 0, 0, 0.3)
     love.graphics.rectangle("fill", x + 4, y + 4, box.w, box.h, 8, 8)
+    -- vermelha ao errar, verde ao acertar
     if round.shake > 0 then
         love.graphics.setColor(1, 0.8, 0.8)
+    elseif round.okFlash > 0 then
+        love.graphics.setColor(0.8, 1, 0.82)
     else
         love.graphics.setColor(1, 1, 1)
     end
     love.graphics.rectangle("fill", x, y, box.w, box.h, 8, 8)
-    love.graphics.setColor(0.2, 0.2, 0.3)
+    if round.okFlash > 0 then
+        love.graphics.setColor(0.2, 0.7, 0.3)
+    else
+        love.graphics.setColor(0.2, 0.2, 0.3)
+    end
     love.graphics.setLineWidth(3)
     love.graphics.rectangle("line", x, y, box.w, box.h, 8, 8)
+
+    -- barra que esvazia enquanto espera um possível dígito a mais ("1" ou "12"?)
+    if round.submitTimer > 0 then
+        local k = round.submitTimer / round.submitDelay
+        love.graphics.setColor(1, 0.85, 0.2)
+        love.graphics.rectangle("fill", x + 8, y + box.h - 7, (box.w - 16) * k, 4, 2, 2)
+    end
 
     local font = assets.fonts.big
     local cursor = (love.timer.getTime() % 1 < 0.5) and "_" or " "
     love.graphics.setFont(font)
+    love.graphics.setColor(0.2, 0.2, 0.3)
     love.graphics.printf(round.input .. cursor, x, y + (box.h - font:getHeight()) / 2, box.w, "center")
 
     -- combo fica ao lado da caixa, onde o olhar já está ao responder;
@@ -95,11 +110,12 @@ local function drawInputBox(round)
         love.graphics.setColor(tier[1], tier[2], tier[3])
         love.graphics.print("x" .. round.combo, 0, -assets.fonts.big:getHeight())
         love.graphics.pop()
-    elseif not config.mobile then
+    elseif not config.mobile and round.hits == 0 then
+        -- dica só até o primeiro acerto: depois o jogador já entendeu
         love.graphics.setFont(assets.fonts.small)
         love.graphics.setColor(1, 1, 1)
         love.graphics.print("digite a resposta", sideX, y + 12)
-        love.graphics.print("e aperte ENTER", sideX, y + 28)
+        love.graphics.print("ela vai sozinha", sideX, y + 28)
     end
 end
 
@@ -108,17 +124,11 @@ local function drawKeypad()
     love.graphics.setFont(font)
     for _, k in ipairs(layout.keys) do
         local down = k.pressed > 0 and 3 or 0
-        local color = { 1, 1, 1 }
-        if k.label == "OK" then
-            color = { 0.3, 0.8, 0.4 }
-        elseif k.label == "<" then
-            color = { 0.95, 0.6, 0.3 }
-        end
 
         love.graphics.setColor(0, 0, 0, 0.3)
         love.graphics.rectangle("fill", k.x, k.y + 5, k.w, k.h, 12, 12)
         local dim = down > 0 and 0.8 or 1
-        love.graphics.setColor(color[1] * dim, color[2] * dim, color[3] * dim)
+        love.graphics.setColor(dim, dim, dim)
         love.graphics.rectangle("fill", k.x, k.y + down, k.w, k.h, 12, 12)
         love.graphics.setColor(0.2, 0.2, 0.3)
         love.graphics.setLineWidth(3)

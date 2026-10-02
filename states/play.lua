@@ -95,14 +95,7 @@ end
 
 local function pressKey(key)
     key.pressed = KEY_PRESS_TIME
-    if key.label == "<" then
-        round:backspace()
-        assets.play("click")
-    elseif key.label == "OK" then
-        round:submitAnswer()
-    else
-        round:typeDigit(key.label)
-    end
+    round:typeDigit(key.label)
 end
 
 function play.pointerpressed(x, y)

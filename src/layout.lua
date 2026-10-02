@@ -38,20 +38,24 @@ function layout.update()
 
     local GROUND_Y
     if config.mobile then
-        local margin, gap, keyH = 16, 10, 70
-        local keyW = (W - margin * 2 - gap * 2) / 3
+        -- teclado de celular: 1-9 em 3 colunas e o 0 no meio da última fileira.
+        -- A resposta vai sozinha, então não há OK nem apagar.
+        local margin, gap, keyH, cols = 16, 10, 70, 3
+        local keyW = (W - margin * 2 - gap * (cols - 1)) / cols
         local top = H - margin - (keyH * 4 + gap * 3)
-        local labels = { "1", "2", "3", "4", "5", "6", "7", "8", "9", "<", "0", "OK" }
+        local labels = { "1", "2", "3", "4", "5", "6", "7", "8", "9", false, "0", false }
         for i, label in ipairs(labels) do
-            local col, row = (i - 1) % 3, math.floor((i - 1) / 3)
-            keys[i] = {
-                label = label,
-                x = margin + col * (keyW + gap),
-                y = top + row * (keyH + gap),
-                w = keyW,
-                h = keyH,
-                pressed = 0,
-            }
+            local col, row = (i - 1) % cols, math.floor((i - 1) / cols)
+            if label then -- false = espaço vazio ao lado do 0
+                keys[#keys + 1] = {
+                    label = label,
+                    x = margin + col * (keyW + gap),
+                    y = top + row * (keyH + gap),
+                    w = keyW,
+                    h = keyH,
+                    pressed = 0,
+                }
+            end
         end
         box.w, box.h = 320, 56
         box.x, box.y = (W - box.w) / 2, top - 12 - box.h
